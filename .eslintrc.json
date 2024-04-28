@@ -5,6 +5,9 @@
     "extends": "trybe-backend",
     "rules": {
       "sonarjs/no-duplicate-string": ["error", 5]
+    },
+    "eslintConfig": {
+      "fix": true
     }
   }
   
