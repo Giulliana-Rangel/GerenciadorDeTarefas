@@ -1,0 +1,23 @@
+
+ [
+    {
+        "nome": "Estudar",
+        "completada": true
+    },
+    {
+        "nome": "Trabalhar",
+        "completada": false
+    },
+    {
+        "nome": "Ler",
+        "completada": true
+    },
+    {
+        "nome": "Correr",
+        "completada": false
+    }
+ ]
+
+
+
+
