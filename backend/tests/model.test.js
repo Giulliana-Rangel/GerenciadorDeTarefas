@@ -4,7 +4,6 @@
 
 const model = require('../src/model/tasks.model');
 const db = require('../src/db/connection');
-const jest = require('jest');
 
 describe('Model', () => {
     before(async () => {

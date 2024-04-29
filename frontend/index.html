@@ -1,0 +1,63 @@
+<!-- //criar uma estrutura de html de um gerenciador de tarefas que possui o botão adicionar nova tarefa, listar todas as tarefas, alterar uma tarefa e excluir uma tarefa.
+//O botão adicionar nova tarefa deve abrir um modal com um formulário para adicionar uma nova tarefa.
+//O botão listar todas as tarefas deve listar todas as tarefas cadastradas.
+//O botão alterar uma tarefa deve abrir um modal com um formulário para alterar uma tarefa.
+//O botão excluir uma tarefa deve excluir uma tarefa.
+//O modal deve ter um botão fechar para fechar o modal.
+//O modal deve ter um botão salvar para salvar a tarefa.
+// deve ter um botão no final da página para apagar todas as tarefas.
+// deve ter um botão no final da página para apagar todas as tarefas concluídas.
+// deve ter um select para mudar o status da tarefa: pendente, concluída, cancelada. -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Tarefas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Gerenciador de Tarefas</h1>
+
+    <!-- Botões de ação -->
+    <button id="btnAddTask">Adicionar Nova Tarefa</button>
+    <button id="btnListTasks">Listar Todas as Tarefas</button>
+
+    <!-- Lista de Tarefas -->
+    <ul id="taskList"></ul>
+
+    <!-- Botões para excluir tarefas -->
+    <div id="taskActions" style="display: none;">
+        <button id="btnUpdateTask">Alterar Tarefa</button>
+        <button id="btnDeleteTask">Excluir Tarefa</button>
+    </div>
+
+    <!-- Botões para apagar tarefas -->
+    <div id="deleteActions" style="display: none;">
+        <button id="btnDeleteAllTasks">Apagar Todas as Tarefas</button>
+        <button id="btnDeleteCompletedTasks">Apagar Tarefas Concluídas</button>
+    </div>
+
+    <!-- Modal para adicionar e atualizar tarefas -->
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Adicionar/Alterar Tarefa</h2>
+            <form id="taskForm">
+                <input type="text" id="taskName" placeholder="Nome da Tarefa" required>
+                <textarea id="taskDescription" placeholder="Descrição da Tarefa"></textarea>
+                <select id="taskStatus">
+                    <option value="pendente">Pendente</option>
+                    <option value="concluida">Concluída</option>
+                    <option value="cancelada">Cancelada</option>
+                </select>
+                <button type="submit" id="btnSaveTask">Salvar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Script JS -->
+    <script src="main.js"></script>
+</body>
+</html>

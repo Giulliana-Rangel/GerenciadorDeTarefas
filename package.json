@@ -4,7 +4,7 @@
   "description": "Projeto destinado ao teste e implantação do copilot para desenvolvedores",
   "main": "backend/src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node backend/src/server.js",
     "dev": "nodemon backend/server.js",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json ."
@@ -13,7 +13,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chai": "^5.1.0",
+    "cors": "^2.8.5",
     "express": "4.17.1",
+    "jest": "^29.7.0",
     "mysql2": "3.0.0"
   },
   "devDependencies": {
