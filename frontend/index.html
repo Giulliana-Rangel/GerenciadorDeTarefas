@@ -20,44 +20,36 @@
 <body>
     <h1>Gerenciador de Tarefas</h1>
 
-    <!-- Botões de ação -->
+    <!-- Botão Adicionar Nova Tarefa -->
     <button id="btnAddTask">Adicionar Nova Tarefa</button>
+
+    <!-- Botão Listar Todas as Tarefas -->
     <button id="btnListTasks">Listar Todas as Tarefas</button>
 
-    <!-- Lista de Tarefas -->
-    <ul id="taskList"></ul>
-
-    <!-- Botões para excluir tarefas -->
-    <div id="taskActions" style="display: none;">
-        <button id="btnUpdateTask">Alterar Tarefa</button>
-        <button id="btnDeleteTask">Excluir Tarefa</button>
-    </div>
-
-    <!-- Botões para apagar tarefas -->
-    <div id="deleteActions" style="display: none;">
-        <button id="btnDeleteAllTasks">Apagar Todas as Tarefas</button>
-        <button id="btnDeleteCompletedTasks">Apagar Tarefas Concluídas</button>
-    </div>
-
-    <!-- Modal para adicionar e atualizar tarefas -->
+    <!-- Modal para adicionar/editar tarefa -->
     <div id="taskModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Adicionar/Alterar Tarefa</h2>
+            <h2>Adicionar/Editar Tarefa</h2>
             <form id="taskForm">
-                <input type="text" id="taskName" placeholder="Nome da Tarefa" required>
+                <input type="text" id="taskTitle" placeholder="Título da Tarefa" required>
                 <textarea id="taskDescription" placeholder="Descrição da Tarefa"></textarea>
                 <select id="taskStatus">
-                    <option value="pendente">Pendente</option>
-                    <option value="concluida">Concluída</option>
-                    <option value="cancelada">Cancelada</option>
+                    <option value="todo">A Fazer</option>
+                    <option value="doing">Fazendo</option>
+                    <option value="done">Feito</option>
                 </select>
                 <button type="submit" id="btnSaveTask">Salvar</button>
             </form>
         </div>
     </div>
 
+    <!-- Lista de Tarefas -->
+    <div id="taskList"></div>
+
     <!-- Script JS -->
     <script src="main.js"></script>
 </body>
 </html>
+
+

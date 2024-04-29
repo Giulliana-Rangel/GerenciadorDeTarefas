@@ -29,13 +29,18 @@ const findTaskById = async (req, res) => {
 }
 
 const createTask = async (req, res) => {
-    try {
-        const task = req.body;
-        const newTask = await tasksService.createTask(task);
+    try{
+        const { title, description, status, user_id } = req.body;
+
+        if (!title || !description || !status || !user_id) {
+            return res.status(400).json({ message: 'Dados inválidos' });
+        }
+
+        const newTask = await tasksService.createTask({ title, description, status, user_id });
         if (newTask.message) {
             return res.status(400).json(newTask);
         }
-        return res.status(200).json(newTask);
+        return res.status(201).json(newTask);
     } catch (error) {
         return res.status(400).json({ message: error.message });
     }
@@ -53,7 +58,9 @@ const updateTask = async (req, res) => {
     } catch (error) {
         return res.status(400).json({ message: error.message });
     }
-}
+};
+
+
 
 const deleteTask = async (req, res) => {
     try {

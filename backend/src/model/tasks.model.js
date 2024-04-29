@@ -9,27 +9,27 @@ const getAll = async () => {
 
 // Crie uma query na camada model para listar uma tarefa por id em um banco de dados mysql
 const getById = async (id) => {
-    const [rows] = await Task.query('SELECT * FROM tasks WHERE id = ?', id);
+    const [[rows]] = await Task.query('SELECT * FROM tasks WHERE id = ?', [id]);
     return rows;
 };
 
 const create = async (task) => {
     const [rows] = await Task.query(
-        'INSERT INTO tasks (title, description, status, user_id) VALUES (?, ?)',
+        'INSERT INTO tasks (title, description, status, user_id) VALUES (?, ?, ?, ? )',
      [task.title, task.description, task.status, task.user_id]);
-    return rows;
+    return rows.insertId;
 }
-
-const update = async (task) => {
-    const [rows] = await Task.query(
+const update = async (id, task) => {
+    const [updatedTask] = await Task.query(
         'UPDATE tasks SET title = ?, description = ?, status = ?, user_id = ? WHERE id = ?', 
-    [task.title, task.description, task.status, task.user_id, task.id]);
-    return rows;
+        [task.title, task.description, task.status, task.user_id, id]
+    );
+    return id; 
 };
 
 const remove = async (id) => {
     const [rows] = await Task.query('DELETE FROM tasks WHERE id = ?', id);
-    return rows;
+    return id;
 };
 
 module.exports = {

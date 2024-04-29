@@ -10,6 +10,13 @@ COPY ./scripts/ /docker-entrypoint-initdb.d/
 
 # Path: backend/scripts/
 
+# crie um código Dockerfile para o MySQL que cria um banco de dados chamado todo_list e um usuário chamado root com a senha root.
+
+
+
+
+
+
 
 
 

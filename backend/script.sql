@@ -30,5 +30,3 @@ INSERT INTO tasks (title, description, status, user_id) VALUES ('Estudar SQL', '
 INSERT INTO tasks (title, description, status, user_id) VALUES ('Fazer compras', 'Comprar pão, leite e ovos no supermercado', 'doing', 1);
 INSERT INTO tasks (title, description, status, user_id) VALUES ('Limpar a casa', 'Limpar a casa e organizar os armários', 'done', 1);
 
-
-

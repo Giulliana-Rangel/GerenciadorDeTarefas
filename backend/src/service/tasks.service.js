@@ -37,9 +37,9 @@ const findTaskById = async (id) => {
         throw new Error(error);
     }
 }
-const createTask = async (task) => {
+const createTask = async ( title, description, status, user_id) => {
     try {
-        const newTask = await tasksModel.create(task);
+        const newTask = await tasksModel.create(title, description, status, user_id);
         if (!newTask) {
             return { message: 'Não foi possível criar a tarefa' };
         }
