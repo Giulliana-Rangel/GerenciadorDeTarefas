@@ -19,7 +19,7 @@ const tasksModel = require('../model/tasks.model');
 
 const findAllTasks = async () => {
     try {
-        const tasks = await tasksModel.findAllTasks();
+        const tasks = await tasksModel.getAll();
         return tasks;
     } catch (error) {
         throw new Error(error);
@@ -28,7 +28,7 @@ const findAllTasks = async () => {
 
 const findTaskById = async (id) => {
     try {
-        const task = await tasksModel.findTaskById(id);
+        const task = await tasksModel.getById(id);
         if (!task) {
             return { message: 'Tarefa não encontrada' };
         }
@@ -39,7 +39,7 @@ const findTaskById = async (id) => {
 }
 const createTask = async (task) => {
     try {
-        const newTask = await tasksModel.createTask(task);
+        const newTask = await tasksModel.create(task);
         if (!newTask) {
             return { message: 'Não foi possível criar a tarefa' };
         }
@@ -50,7 +50,7 @@ const createTask = async (task) => {
 }
 const updateTask = async (id, task) => {
     try {
-        const updatedTask = await tasksModel.updateTask(id, task);
+        const updatedTask = await tasksModel.update(id, task);
         if (!updatedTask) {
             return { message: 'Não foi possível atualizar a tarefa' };
         }
@@ -61,7 +61,7 @@ const updateTask = async (id, task) => {
 }
 const deleteTask = async (id) => {
     try {
-        const deletedTask = await tasksModel.deleteTask(id);
+        const deletedTask = await tasksModel.remove(id);
         if (!deletedTask) {
             return { message: 'Não foi possível deletar a tarefa' };
         }

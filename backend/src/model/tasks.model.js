@@ -1,5 +1,4 @@
 //crie querys para buscar todos os registros, buscar por id, criar, atualizar e deletar um registro
-
 const Task = require('../db/connection');
 
 // Crie uma query na camada model para listar todas as tarefas em um banco de dados mysql
@@ -19,7 +18,7 @@ const create = async (task) => {
         'INSERT INTO tasks (title, description, status, user_id) VALUES (?, ?)',
      [task.title, task.description, task.status, task.user_id]);
     return rows;
-};
+}
 
 const update = async (task) => {
     const [rows] = await Task.query(

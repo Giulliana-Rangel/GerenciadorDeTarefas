@@ -4,6 +4,8 @@
 //Crie um método na camada de controller para lidar com a busca de todas as tarefas. O método deve chamar o método correspondente na camada de serviço para buscar todas as tarefas.
 //Crie um método na camada de controller para lidar com a busca de uma tarefa por id. O método deve receber os dados da requisição HTTP, validar os parâmetros e chamar o método correspondente na camada de serviço para buscar a tarefa.
 
+const tasksService = require('../service/tasks.service');
+
 const findAllTasks = async (_req, res) => {
     try {
         const tasks = await tasksService.findAllTasks();
