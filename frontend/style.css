@@ -6,97 +6,154 @@
 //crie um css para o botão de salvar tarefa
 //crie um css para o select de status */
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    margin: 0;
-    padding: 0;
+/* Estilo para o contêiner de cada cartão de tarefa */
+.task-card {
+    background-color: #fff; /* Cor de fundo do cartão */
+    border-radius: 8px; /* Borda arredondada */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    padding: 16px; /* Espaçamento interno */
+    margin-bottom: 16px; /* Espaçamento inferior entre os cartões */
 }
 
-h1 {
-    color: #1a237e; /* Azul escuro */
-    text-align: center;
+/* Estilo para o título da tarefa */
+.task-card h3 {
+    margin-bottom: 8px; /* Espaçamento inferior */
 }
 
-button {
-    background-color: #ff9800; /* Laranja */
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 10px;
+/* Estilo para a descrição da tarefa */
+.task-card p {
+    margin-bottom: 4px; /* Espaçamento inferior */
+    font-size: 14px; /* Tamanho da fonte */
 }
 
-button:hover {
-    background-color: #f57c00; /* Laranja mais escuro */
+/* Estilo para os botões de ação dentro do cartão */
+.task-card button {
+    margin-right: 8px; /* Espaçamento entre os botões */
+    padding: 8px 16px; /* Espaçamento interno dos botões */
+    border: none; /* Sem borda */
+    border-radius: 4px; /* Borda arredondada */
+    cursor: pointer; /* Cursor de ponteiro ao passar por cima */
 }
 
-#taskList {
-    list-style: none;
-    padding: 0;
+/* Estilo para o botão de excluir */
+.task-card .delete-btn {
+    background-color: #ff6347; /* Cor de fundo vermelha */
+    color: #fff; /* Cor do texto branco */
 }
 
-#taskList li {
-    background-color: #fff;
-    padding: 10px;
-    margin-bottom: 5px;
-    border-radius: 5px;
+/* Estilo para o botão de editar */
+.task-card .edit-btn {
+    background-color: #007bff; /* Cor de fundo azul */
+    color: #fff; /* Cor do texto branco */
 }
 
-#taskActions,
-#deleteActions {
-    margin-top: 20px;
+/* Estilo para os botões principais */
+.container button {
+    margin-right: 8px; /* Espaçamento entre os botões */
+    padding: 8px 16px; /* Espaçamento interno dos botões */
+    border: none; /* Sem borda */
+    border-radius: 4px; /* Borda arredondada */
+    cursor: pointer; /* Cursor de ponteiro ao passar por cima */
+    background-color: #007bff; /* Cor de fundo azul */
+    color: #fff; /* Cor do texto branco */
 }
 
-#taskActions button,
-#deleteActions button {
-    background-color: #1a237e; /* Azul escuro */
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 10px;
-}
-
-#taskActions button:hover,
-#deleteActions button:hover {
-    background-color: #0d47a1; /* Azul mais escuro */
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    border-radius: 5px;
-    width: 80%;
-}
-
+/* Estilo para o botão de fechar os modais */
 .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+    position: absolute; /* Posição absoluta */
+    top: 8px; /* Distância do topo */
+    right: 16px; /* Distância da direita */
+    cursor: pointer; /* Cursor de ponteiro ao passar por cima */
+    font-size: 20px; /* Tamanho da fonte */
+    color: #aaa; /* Cor do ícone */
 }
 
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
+/* Ocultar formulários de adicionar e editar tarefa por padrão */
+#addTaskModal,
+#editTaskModal {
+    display: none;
 }
+
+/* Estilo para os modais */
+.modal {
+    display: none; /* Oculta os modais por padrão */
+    position: fixed; /* Mantém os modais fixos na tela */
+    top: 0; /* Posiciona os modais no topo da tela */
+    left: 0; /* Posiciona os modais no lado esquerdo da tela */
+    width: 100%; /* Largura total */
+    height: 100%; /* Altura total */
+    background-color: rgba(0, 0, 0, 0.5); /* Cor de fundo escura semitransparente */
+    z-index: 1000; /* Define a ordem de empilhamento */
+}
+
+/* Estilo para o conteúdo dos modais */
+.modal-content {
+    position: absolute; /* Posição absoluta */
+    top: 50%; /* Centraliza verticalmente */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translate(-50%, -50%); /* Move o modal para o centro */
+    background-color: #fff; /* Cor de fundo do conteúdo */
+    border-radius: 8px; /* Borda arredondada */
+    padding: 20px; /* Espaçamento interno */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    width: 80%; /* Largura do conteúdo */
+    max-width: 600px; /* Largura máxima */
+}
+
+/* Estilo para o botão de fechar os modais */
+.close {
+    position: absolute; /* Posição absoluta */
+    top: 8px; /* Distância do topo */
+    right: 16px; /* Distância da direita */
+    cursor: pointer; /* Cursor de ponteiro ao passar por cima */
+    font-size: 20px; /* Tamanho da fonte */
+    color: #aaa; /* Cor do ícone */
+}
+
+/* Estilo para o botão de fechar os modais ao passar o mouse */
+.close:hover {
+    color: #333; /* Altera a cor do ícone ao passar o mouse */
+}
+
+/* Estilo para os campos dos modais */
+.modal-content label {
+    display: block; /* Exibe os labels em bloco */
+    margin-bottom: 10px; /* Espaçamento inferior entre os labels */
+    font-weight: bold; /* Define a fonte em negrito */
+}
+
+/* Estilo para os inputs dos modais */
+.modal-content input,
+.modal-content select {
+    width: 100%; /* Largura total */
+    padding: 8px; /* Espaçamento interno */
+    margin-bottom: 16px; /* Espaçamento inferior entre os inputs */
+    border: 1px solid #ccc; /* Borda sólida cinza */
+    border-radius: 4px; /* Borda arredondada */
+    box-sizing: border-box; /* Inclui padding e borda na largura total */
+    font-size: 16px; /* Tamanho da fonte */
+}
+
+/* Estilo para os botões dos modais */
+.modal-content button {
+    padding: 10px 20px; /* Espaçamento interno */
+    background-color: #007bff; /* Cor de fundo azul */
+    color: #fff; /* Cor do texto branca */
+    border: none; /* Remove a borda */
+    border-radius: 4px; /* Borda arredondada */
+    cursor: pointer; /* Cursor de ponteiro ao passar por cima */
+}
+
+/* Estilo para os botões dos modais ao passar o mouse */
+.modal-content button:hover {
+    background-color: #0056b3; /* Altera a cor de fundo ao passar o mouse */
+}
+
+#addTaskBtn:hover, #listTasksBtn:hover {
+    transform: scale(1.1); /* Aumenta em 10% ao passar o mouse */
+    font-weight: bold; /* Deixa o texto em negrito */
+    font-size: 1.1em; /* Aumenta o tamanho da fonte */
+    transition: transform 0.2s ease; /* Adiciona uma transição suave */
+}
+
+
