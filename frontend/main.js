@@ -1,223 +1,201 @@
-// Variável global para armazenar o ID da tarefa em edição
-let editingTaskId = null;
-
-// Função para adicionar uma nova tarefa
-async function addTask(title, description, status) {
-    try {
-        const response = await fetch('http://localhost:3002/tasks', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ title, description, status }),
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to add task');
-        }
-
-        await listTasks();
-        alert('Tarefa adicionada com sucesso!');
-    } catch (error) {
-        console.error('Error adding task:', error);
-        alert('Erro ao adicionar tarefa');
-    }
-}
-
-// Adicionando event listener ao formulário de adicionar tarefa
-document.getElementById('taskForm').addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const title = document.getElementById('taskTitle').value;
-    const description = document.getElementById('taskDescription').value;
-    const status = document.getElementById('taskStatus').value;
-
-    await addTask(title, description, status);
-
-    const modal = document.getElementById('taskModal');
-    modal.style.display = 'none';
+// Função para abrir o modal de adicionar tarefa
+document.getElementById("addTaskBtn").addEventListener("click", function() {
+    document.getElementById("addTaskModal").style.display = "block";
 });
 
-
-// Função para adicionar uma nova tarefa
-async function addTask(title, description, status) {
-    try {
-        const response = await fetch('http://localhost:3002/tasks', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ title, description, status }),
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to add task');
-        }
-
-        await listTasks();
-        alert('Tarefa adicionada com sucesso!');
-    } catch (error) {
-        console.error('Error adding task:', error);
-        alert('Erro ao adicionar tarefa');
-    }
-}
-
-
-// Função para abrir o modal de edição preenchido com os dados da tarefa
-function openEditModal(task) {
-    const modal = document.getElementById('taskModal');
-    const titleInput = document.getElementById('taskTitle');
-    const descriptionInput = document.getElementById('taskDescription');
-    const statusSelect = document.getElementById('taskStatus');
-
-    titleInput.value = task.title;
-    descriptionInput.value = task.description;
-    statusSelect.value = task.status;
-
-    modal.style.display = 'block';
-
-    // Definir o ID da tarefa em edição
-    editingTaskId = task.id;
-}
-
-// Função para adicionar ou atualizar uma tarefa
-async function addTask(title, description, status) {
-    try {
-        let method = 'POST'; // Definir o método padrão como POST
-
-        // Se houver um ID de tarefa em edição, alterar o método para PUT
-        if (editingTaskId) {
-            method = 'PUT';
-        }
-
-        const url = editingTaskId ? `http://localhost:3002/tasks/${editingTaskId}` : 'http://localhost:3002/tasks';
-
-        const response = await fetch(url, {
-            method,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ title, description, status }),
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to add/update task');
-        }
-
-        // Limpar o ID de tarefa em edição após adicionar/atualizar
-        editingTaskId = null;
-
-        // Atualiza a lista de tarefas após adicionar/atualizar
-        await listTasks();
-        alert('Tarefa adicionada/atualizada com sucesso!');
-    } catch (error) {
-        console.error('Error adding/updating task:', error);
-        alert('Erro ao adicionar/atualizar tarefa');
-    }
-}
-
-// Função para excluir uma tarefa
-async function deleteTask(id) {
-    try {
-        const response = await fetch(`http://localhost:3002/tasks/${id}`, {
-            method: 'DELETE',
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to delete task');
-        }
-
-        // Atualiza a lista de tarefas após a exclusão
-        await listTasks();
-        alert('Tarefa excluída com sucesso!');
-    } catch (error) {
-        console.error('Error deleting task:', error);
-        alert('Erro ao excluir tarefa');
-    }
-}
-
-// Adicionando event listener ao formulário de tarefa
-document.getElementById('taskForm').addEventListener('submit', (event) => {
-    event.preventDefault();
-    const title = document.getElementById('taskTitle').value;
-    const description = document.getElementById('taskDescription').value;
-    const status = document.getElementById('taskStatus').value;
-
-    addTask(title, description, status);
-
-    const modal = document.getElementById('taskModal');
-    modal.style.display = 'none';
-});
-
-// Adicionando event listener ao botão de excluir tarefa
-function setupDeleteButtons() {
-    const deleteButtons = document.querySelectorAll('.delete-task-btn');
-    deleteButtons.forEach(button => {
-        button.addEventListener('click', async () => {
-            const taskId = button.dataset.taskId;
-            await deleteTask(taskId);
+// Função para fechar o modal ao clicar no botão fechar
+document.querySelectorAll(".close").forEach(function(closeBtn) {
+    closeBtn.addEventListener("click", function() {
+        document.querySelectorAll(".modal").forEach(function(modal) {
+            modal.style.display = "none";
         });
     });
-}
+});
 
-// Adicionando event listener ao botão de listar tarefas
-document.getElementById('btnListTasks').addEventListener('click', listTasks);
-
-// Adicionando event listener ao fechar o modal de edição
-document.querySelector('.close').addEventListener('click', () => {
-    const modal = document.getElementById('taskModal');
-    modal.style.display = 'none';
+// Função para listar tarefas e mostrar botões de ação
+document.getElementById("listTasksBtn").addEventListener("click", function() {
+    document.getElementById("taskList").style.display = "block";
+    document.getElementById("action-buttons").style.display = "block";
     
-    // Limpar o ID de tarefa em edição ao fechar o modal
-    editingTaskId = null;
-});
+    // Requisição GET para obter a lista de tarefas
+    fetch('http://localhost:3002/tasks')
+        .then(response => response.json())
+        .then(data => {
+            const taskList = document.getElementById("taskList");
+            taskList.innerHTML = ''; // Limpa a lista antes de adicionar novos elementos
+            
+            // Adiciona cada tarefa à lista
+            data.forEach(task => {
+                const taskCard = document.createElement('div');
+                taskCard.classList.add('task-card');
+                taskCard.innerHTML = `
+                    <h3>${task.title}</h3>
+                    <p>${task.description}</p>
+                    <p>Status: ${task.status}</p>
+                    <p>User ID: ${task.user_id}</p>
+                    <button class="delete-btn" data-id="${task.id}">Excluir</button>
+                    <button class="edit-btn" data-id="${task.id}">Editar</button>
+                `;
+                taskList.appendChild(taskCard);
+            });
 
-// Adicionando event listener ao formulário de edição de tarefa
-document.getElementById('editTaskForm').addEventListener('submit', (event) => {
-    event.preventDefault();
-    const id = document.getElementById('editTaskId').value;
-    const title = document.getElementById('editTaskTitle').value;
-    const description = document.getElementById('editTaskDescription').value;
-    const status = document.getElementById('editTaskStatus').value;
-    updateTask(id, title, description, status);
-    // Fechar o modal após salvar a alteração da tarefa
-    const modal = document.getElementById('editTaskModal');
-    modal.style.display = 'none';
-});
+            // Adiciona ouvinte de eventos para botões de excluir
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const taskId = btn.getAttribute('data-id');
+                    // Requisição DELETE para excluir a tarefa
+                    fetch(`http://localhost:3002/tasks/${taskId}`, { method: 'DELETE' })
+                        .then(response => response.json())
+                        .then(data => {
+                            // Atualiza a lista de tarefas após excluir
+                            document.getElementById("listTasksBtn").click();
+                        });
+                });
+            });
 
-// Inicializar botões de exclusão após listar tarefas
-async function listTasks() {
-    try {
-        const response = await fetch('http://localhost:3002/tasks');
-        const tasks = await response.json();
+            // Adiciona ouvinte de eventos para botões de editar
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove a classe 'active' de todos os botões de edição
+                    document.querySelectorAll('.edit-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    // Adiciona a classe 'active' ao botão de edição clicado
+                    btn.classList.add('active');
 
-        const taskList = document.getElementById('taskList');
-        taskList.innerHTML = '';
-
-        tasks.forEach(task => {
-            const taskItem = document.createElement('li');
-            taskItem.textContent = `Title: ${task.title}, Description: ${task.description}, Status: ${task.status}`;
-
-            const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Delete';
-            deleteButton.classList.add('delete-task-btn');
-            deleteButton.dataset.taskId = task.id;
-
-            const editButton = document.createElement('button');
-            editButton.textContent = 'Edit';
-            editButton.addEventListener('click', () => openEditModal(task));
-
-            taskItem.appendChild(deleteButton);
-            taskItem.appendChild(editButton);
-
-            taskList.appendChild(taskItem);
+                    const taskId = btn.getAttribute('data-id');
+                    // Requisição GET para obter os detalhes da tarefa a ser editada
+                    fetch(`http://localhost:3002/tasks/${taskId}`)
+                        .then(response => response.json())
+                        .then(task => {
+                            // Preenche o formulário de edição com os detalhes da tarefa
+                            document.getElementById("editTitle").value = task.title;
+                            document.getElementById("editDescription").value = task.description;
+                            document.getElementById("editStatus").value = task.status;
+                            document.getElementById("editUserId").value = task.user_id;
+                            // Abre o modal de edição
+                            document.getElementById("editTaskModal").style.display = "block";
+                        });
+                });
+            });
         });
+});
 
-        // Configurar botões de exclusão após listar tarefas
-        setupDeleteButtons();
-    } catch (error) {
-        console.error('Error fetching tasks:', error);
+// Função para adicionar tarefa
+document.getElementById("addTaskForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Evita o recarregamento da página ao enviar o formulário
+    
+    // Obtém os valores do formulário
+    const title = document.getElementById("title").value;
+    const description = document.getElementById("description").value;
+    const status = document.getElementById("status").value;
+    const userId = parseInt(document.getElementById("user_id").value);
+
+    // Cria um objeto com os dados da nova tarefa
+    const newTask = { title, description, status, user_id: userId };
+
+    // Requisição POST para adicionar a nova tarefa
+    fetch('http://localhost:3002/tasks', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newTask),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erro ao adicionar tarefa');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Exibe um alerta de sucesso
+        alert('Tarefa adicionada com sucesso');
+        // Fecha o modal de adição de tarefa
+        document.getElementById("addTaskModal").style.display = "none";
+    })
+    .catch(error => {
+        // Exibe um alerta de erro
+        alert('Erro ao adicionar tarefa');
+        console.error('Erro ao adicionar tarefa:', error);
+    });
+});
+
+// Função para editar tarefa
+document.getElementById("editTaskForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Evita o recarregamento da página ao enviar o formulário
+    
+    // Obtém os valores do formulário
+    const title = document.getElementById("editTitle").value;
+    const description = document.getElementById("editDescription").value;
+    const status = document.getElementById("editStatus").value;
+    const userId = parseInt(document.getElementById("editUserId").value);
+
+    // Cria um objeto com os dados da tarefa editada
+    const editedTask = { title, description, status, user_id: userId };
+
+    // Obtém o ID da tarefa a ser editada apenas se houver um botão de edição ativo
+    const activeEditBtn = document.querySelector('.edit-btn.active');
+    console.log("Botão de edição ativo:", activeEditBtn); // Adicionando log para depurar
+    if (activeEditBtn) {
+        const taskId = activeEditBtn.getAttribute('data-id');
+        console.log("ID da tarefa a ser editada:", taskId); // Adicionando log para depurar
+
+        // Requisição PUT para editar a tarefa
+        fetch(`http://localhost:3002/tasks/${taskId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(editedTask),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao editar tarefa');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Exibe um alerta de sucesso
+            alert('Tarefa editada com sucesso');
+            // Fecha o modal de edição de tarefa
+            document.getElementById("editTaskModal").style.display = "none";
+            // Atualiza a lista de tarefas após editar
+            document.getElementById("listTasksBtn").click();
+        })
+        .catch(error => {
+            // Exibe um alerta de erro
+            alert('Erro ao editar tarefa');
+            console.error('Erro ao editar tarefa:', error);
+        });
+    } else {
+        alert('Nenhuma tarefa selecionada para editar');
     }
-}
+});
 
-// Chamar listTasks para listar as tarefas no carregamento da página
-listTasks();
+
+// Função para deletar todas as tarefas
+document.getElementById("deleteAllBtn").addEventListener("click", function() {
+    // Requisição DELETE para excluir todas as tarefas
+    fetch('http://localhost:3002/tasks', { method: 'DELETE' })
+        .then(response => response.json())
+        .then(data => {
+            // Atualiza a lista de tarefas após excluir
+            document.getElementById("listTasksBtn").click();
+        });
+});
+
+// Função para deletar as tarefas concluídas
+document.getElementById("deleteCompletedBtn").addEventListener("click", function() {
+    // Requisição DELETE para excluir apenas as tarefas concluídas
+    fetch('http://localhost:3002/tasks?status=done', { method: 'DELETE' })
+        .then(response => response.json())
+        .then(data => {
+            // Atualiza a lista de tarefas após excluir
+            document.getElementById("listTasksBtn").click();
+        });
+});
+
+
+
+

@@ -1,16 +1,5 @@
-<!-- //criar uma estrutura de html de um gerenciador de tarefas que possui o botão adicionar nova tarefa, listar todas as tarefas, alterar uma tarefa e excluir uma tarefa.
-//O botão adicionar nova tarefa deve abrir um modal com um formulário para adicionar uma nova tarefa.
-//O botão listar todas as tarefas deve listar todas as tarefas cadastradas.
-//O botão alterar uma tarefa deve abrir um modal com um formulário para alterar uma tarefa.
-//O botão excluir uma tarefa deve excluir uma tarefa.
-//O modal deve ter um botão fechar para fechar o modal.
-//O modal deve ter um botão salvar para salvar a tarefa.
-// deve ter um botão no final da página para apagar todas as tarefas.
-// deve ter um botão no final da página para apagar todas as tarefas concluídas.
-// deve ter um select para mudar o status da tarefa: pendente, concluída, cancelada. -->
-
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,38 +7,82 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Gerenciador de Tarefas</h1>
 
-    <!-- Botão Adicionar Nova Tarefa -->
-    <button id="btnAddTask">Adicionar Nova Tarefa</button>
+<!-- Botões Principais -->
+<div class="container mt-4">
+    <button type="button" id="addTaskBtn">Adicionar Tarefa</button>
+    <button type="button" id="listTasksBtn">Listar Tarefas</button>
 
-    <!-- Botão Listar Todas as Tarefas -->
-    <button id="btnListTasks">Listar Todas as Tarefas</button>
-
-    <!-- Modal para adicionar/editar tarefa -->
-    <div id="taskModal" class="modal">
+    <!-- Modal Adicionar Tarefa -->
+    <div id="addTaskModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Adicionar/Editar Tarefa</h2>
-            <form id="taskForm">
-                <input type="text" id="taskTitle" placeholder="Título da Tarefa" required>
-                <textarea id="taskDescription" placeholder="Descrição da Tarefa"></textarea>
-                <select id="taskStatus">
-                    <option value="todo">A Fazer</option>
+            <h2>Adicionar Tarefa</h2>
+            <!-- Formulário de Adicionar Tarefa -->
+            <form id="addTaskForm">
+                <label for="title">Título:</label><br>
+                <input type="text" id="title" name="title"><br>
+                <label for="description">Descrição:</label><br>
+                <input type="text" id="description" name="description"><br>
+                <label for="status">Status:</label><br>
+                <select id="status" name="status">
+                    <option value="todo">A fazer</option>
                     <option value="doing">Fazendo</option>
                     <option value="done">Feito</option>
-                </select>
-                <button type="submit" id="btnSaveTask">Salvar</button>
+                </select><br>
+                <label for="user_id">ID do Usuário:</label><br>
+                <input type="number" id="user_id" name="user_id"><br>
+                <button type="submit">Adicionar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Editar Tarefa -->
+    <div id="editTaskModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Editar Tarefa</h2>
+            <!-- Formulário de Editar Tarefa -->
+            <form id="editTaskForm">
+                <label for="editTitle">Título:</label><br>
+                <input type="text" id="editTitle" name="editTitle"><br>
+                <label for="editDescription">Descrição:</label><br>
+                <input type="text" id="editDescription" name="editDescription"><br>
+                <label for="editStatus">Status:</label><br>
+                <select id="editStatus" name="editStatus">
+                    <option value="todo">A fazer</option>
+                    <option value="doing">Fazendo</option>
+                    <option value="done">Feito</option>
+                </select><br>
+                <label for="editUserId">ID do Usuário:</label><br>
+                <input type="number" id="editUserId" name="editUserId"><br>
+                <button type="submit">Salvar</button>
             </form>
         </div>
     </div>
 
     <!-- Lista de Tarefas -->
-    <div id="taskList"></div>
+    <div id="taskList" class="mt-4" style="display: none;">
+        <!-- Cartões de Tarefa serão adicionados aqui -->
+        <div class="task-card">
+            <!-- Conteúdo do Cartão de Tarefa -->
+        </div>
+    </div>
 
-    <!-- Script JS -->
-    <script src="main.js"></script>
+    <!-- Botões de Ação no Final da Lista -->
+    <div id="action-buttons" style="display: none;">
+        <button type="button" id="deleteAllBtn">Deletar Todas as Tarefas</button>
+        <button type="button" id="deleteCompletedBtn">Deletar Tarefas Concluídas</button>
+    </div>
+</div>
+
+<script src="main.js"></script>
 </body>
 </html>
+
+
+
+
+
 
 
